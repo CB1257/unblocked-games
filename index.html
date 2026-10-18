@@ -8,15 +8,212 @@
     <meta property="og:title" content="Nexus Unblocked - Web Arcade" />
     <meta property="og:description" content="Fast and responsive unblocked games portal loaded from JSON with custom iframe support, favorites, and stealth features." />
     <meta property="og:type" content="website" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Top Global Header -->
+    <header class="nexus-header">
+      <div class="header-container">
+        <!-- Brand -->
+        <a href="#" class="brand" id="brand-link">
+          <div class="brand-icon">
+            <div class="brand-icon-inner">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="12" x2="10" y2="12"></line>
+                <line x1="8" y1="10" x2="8" y2="14"></line>
+                <line x1="15" y1="13" x2="15.01" y2="13"></line>
+                <line x1="18" y1="11" x2="18.01" y2="11"></line>
+                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="brand-title">NEXUS</span>
+              <span class="brand-badge">UNBLOCKED</span>
+            </div>
+            <div class="brand-subtitle">Web Arcade Portal</div>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="search-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Search games, tags, categories... (press /)" />
+        </div>
+
+        <!-- Action Controls -->
+        <div class="nav-actions">
+          <button class="btn-nav" id="btn-random" title="Play a random game">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+            <span>Random</span>
+          </button>
+
+          <button class="btn-nav btn-cyan" id="btn-open-add" title="Add a custom game via iframe or URL">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            <span>Add Game</span>
+          </button>
+
+          <button class="btn-nav" id="btn-open-json" title="View, download, or upload games.json">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            <span>games.json</span>
+          </button>
+
+          <button class="btn-nav" id="btn-open-cloak" title="Disguise tab as Google Classroom, Docs, Drive...">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            <span>Cloak</span>
+          </button>
+
+          <button class="btn-nav btn-panic" id="btn-panic" title="Panic key: escape to Google Classroom (Press Esc)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Panic</span>
+            <span class="kbd-badge">Esc</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container Render Target -->
+    <main class="main-wrapper" id="app"></main>
+
+    <!-- Global Footer -->
+    <footer class="nexus-footer">
+      <div class="footer-inner">
+        <div>
+          <strong style="color: #cbd5e1;">Nexus Unblocked</strong> — All games stored in JSON as playable iframes.
+        </div>
+        <div>
+          <span>Static HTML, JS &amp; CSS • Works on GitHub Pages &amp; Local</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Add Game Modal -->
+    <div class="modal-overlay" id="modal-add-game" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 style="font-size: 1.1rem; font-weight: 800;">Add Iframe Game</h3>
+          <button class="modal-close" id="btn-close-add">&times;</button>
+        </div>
+        <form id="form-add-game">
+          <div class="form-group">
+            <label class="form-label">Game Title *</label>
+            <input type="text" id="add-title" class="form-input" required placeholder="e.g. Run 3, 1v1.LOL" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="add-category" class="form-select">
+                <option value="Arcade">Arcade</option>
+                <option value="Action">Action</option>
+                <option value="Puzzle">Puzzle</option>
+                <option value="Retro">Retro</option>
+                <option value="Casual">Casual</option>
+                <option value="Strategy">Strategy</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Thumbnail URL</label>
+              <input type="url" id="add-thumb" class="form-input" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Iframe Source URL or &lt;iframe&gt; code *</label>
+            <textarea id="add-url" class="form-textarea" rows="2" required placeholder="https://... or <iframe src='https://...'></iframe>"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Controls</label>
+            <input type="text" id="add-controls" class="form-input" placeholder="e.g. Arrow keys, Space to jump" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea id="add-desc" class="form-textarea" rows="2" placeholder="Brief gameplay summary..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
+            <button type="submit" class="btn-play-hero" style="padding: 0.6rem 1.25rem;">Save Game</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- JSON Storage Manager Modal -->
+    <div class="modal-overlay" id="modal-json" style="display: none;">
+      <div class="modal-dialog modal-dialog-large">
+        <div class="modal-header">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">games.json Storage Manager</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8;">All games stored with iframe sources in standard JSON</p>
+          </div>
+          <button class="modal-close" id="btn-close-json">&times;</button>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <button class="btn-nav" id="btn-copy-json">Copy JSON</button>
+          <button class="btn-nav btn-cyan" id="btn-download-json">Download games.json</button>
+          <label class="btn-nav" style="cursor: pointer;">
+            <span>Upload JSON</span>
+            <input type="file" id="file-import-json" accept=".json" style="display: none;" />
+          </label>
+          <button class="btn-nav" id="btn-reset-json" style="margin-left: auto; color: #f87171;">Reset Catalog</button>
+        </div>
+
+        <div class="json-viewer" id="json-code"></div>
+      </div>
+    </div>
+
+    <!-- Tab Cloaker Modal -->
+    <div class="modal-overlay" id="modal-cloak" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div>
+            <h3 style="font-size: 1.1rem; font-weight: 800;">Tab Cloaker &amp; Stealth</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8;">Change browser title &amp; icon to school disguise</p>
+          </div>
+          <button class="modal-close" id="btn-close-cloak">&times;</button>
+        </div>
+        <div id="cloak-list"></div>
+      </div>
+    </div>
+
+    <!-- Realistic Google Classroom Emergency Panic Screen -->
+    <div class="panic-screen" id="panic-overlay" style="display: none;">
+      <div class="panic-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 32px; height: 32px; border-radius: 50%; background: #137333; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+            C
+          </div>
+          <span style="font-size: 1.1rem; font-weight: 500; color: #3c4043;">Google Classroom</span>
+        </div>
+        <button id="btn-close-panic" style="padding: 6px 14px; background: #f1f3f4; border-radius: 6px; font-size: 0.8rem; font-weight: 600; color: #1a73e8; border: 1px solid #dadce0;">
+          Return to Arcade ↺
+        </button>
+      </div>
+
+      <div style="max-width: 900px; margin: 1.5rem auto; width: 100%; padding: 0 1rem; flex: 1;">
+        <div class="panic-banner">
+          <h1 style="font-size: 1.5rem; font-weight: 700;">AP Computer Science Principles</h1>
+          <p style="font-size: 0.85rem; opacity: 0.9; margin-top: 4px;">Period 3 • Lab Section</p>
+        </div>
+
+        <div style="border: 1px solid #dadce0; border-radius: 8px; padding: 1.25rem; background: #fff; margin-bottom: 1rem;">
+          <h3 style="font-size: 0.95rem; font-weight: 600; color: #202124;">Assignment: Algorithm Complexity and Sorting</h3>
+          <p style="font-size: 0.8rem; color: #5f6368; margin-top: 4px;">Posted Yesterday (Due Friday)</p>
+          <p style="font-size: 0.85rem; color: #3c4043; margin-top: 0.75rem; line-height: 1.5;">
+            Please read section 3.2 on asymptotic runtime analysis and complete the practice exercises before tomorrow's class.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Native Application Script (Relative path, zero build required for GitHub Pages) -->
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
-
