@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="16" fill="#090a0f"/>
+  <rect x="2" y="2" width="60" height="60" rx="14" stroke="#06b6d4" stroke-width="2" stroke-opacity="0.6"/>
+  <!-- Gamepad icon -->
+  <path d="M18 24H46C49.3137 24 52 26.6863 52 30V40C52 43.3137 49.3137 46 46 46H18C14.6863 46 12 43.3137 12 40V30C12 26.6863 14.6863 24 18 24Z" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <!-- D-pad -->
+  <path d="M22 31V39M18 35H26" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Action buttons -->
+  <circle cx="44" cy="33" r="2" fill="#ec4899"/>
+  <circle cx="40" cy="37" r="2" fill="#a855f7"/>
+  <circle cx="48" cy="37" r="2" fill="#3b82f6"/>
+  <circle cx="44" cy="41" r="2" fill="#10b981"/>
+</svg>
